@@ -18,10 +18,28 @@ class App extends Component {
 	
 	toggleComplete(index){
 		var newToDo = this.state.todos;
-		console.log(newToDo.length);
 		newToDo[index].isCompleted = !newToDo[index].isCompleted
 		this.setState({
 			todos : newToDo
+		});
+	}
+	deleteToDo(index){
+		var newToDos = [];
+		let counter = 0;
+		var newToDos = this.state.todos.filter((todo,indexf) => indexf!==index);
+		
+		/*
+		this.state.todos.map((todo, indexf)=> {
+			if(index !== indexf){
+				newToDos[counter] = {
+					description:todo.description, isCompleted:todo.isCompleted
+				};
+				counter++;
+			}
+		});
+		*/
+		this.setState({
+			todos : newToDos
 		});
 	}
 	
@@ -47,7 +65,7 @@ class App extends Component {
       <div className="App">
         <ul>
         	{this.state.todos.map( (todo,index) => 
-        		<ToDo key={index} description={todo.description} isCompleted = {todo.isCompleted} toggleComplete = {() => this.toggleComplete(index)}/>
+        		<ToDo key={index} description={todo.description} isCompleted = {todo.isCompleted} deleteToDo={()=>this.deleteToDo(index)} toggleComplete = {() => this.toggleComplete(index)}/>
         	)}
         </ul>
         <form onSubmit={(e) => this.handleSubmit(e)}>
